@@ -1,10 +1,10 @@
 clearvars;
 
-[train_data, train_label, validation_data, ...
-    validation_label, test_data, test_label] = preprocess();
+%[train_data, train_label, validation_data, ...
+%    validation_label, test_data, test_label] = preprocess();
 
-save('dataset.mat', 'train_data', 'train_label', 'validation_data', ...
-                    'validation_label', 'test_data', 'test_label');
+%save('dataset.mat', 'train_data', 'train_label', 'validation_data', ...
+%                    'validation_label', 'test_data', 'test_label');
 load('dataset.mat');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

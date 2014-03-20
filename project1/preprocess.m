@@ -35,125 +35,32 @@ load('mnist_all.mat');
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% loading test data
 test_data = [];
-test_data = vertcat(test_data, test0);
-test_data = vertcat(test_data, test1);
-test_data = vertcat(test_data, test2);
-test_data = vertcat(test_data, test3);
-test_data = vertcat(test_data, test4);
-test_data = vertcat(test_data, test5);
-test_data = vertcat(test_data, test6);
-test_data = vertcat(test_data, test7);
-test_data = vertcat(test_data, test8);
-test_data = vertcat(test_data, test9);
+test_label = [];
+for i = 1:10
+    test_matrix = eval(strcat('test', num2str(i - 1)));
+    test_data = vertcat(test_data, test_matrix);
+    [rows, columns] = size(test_matrix);
+    test_label = vertcat(test_label, [zeros(rows,(i-1)) ones(rows, 1) zeros(rows, 9-(i-1))]);
+end
 
-[rows, columns] = size(test_data);
-test_label = zeros(rows, 10);
-
+% loading train data and validation data
 train_data = [];
-validation_data = [];
 train_label = [];
+validation_data = [];
 validation_label = [];
 
-train_matrix = train0;
-i = 1;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train1;
-i = 2;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train2;
-i = 3;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train3;
-i = 4;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train4;
-i = 5;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train5;
-i = 6;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train6;
-i = 7;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train7;
-i = 8;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train8;
-i = 9;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
-
-train_matrix = train9;
-i = 10;
-[rows, columns] = size(train_matrix);
-train_rows = ceil(rows * (5.0/ 6.0));
-validation_rows = rows - train_rows;
-train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
+for i = 1:10
+    train_matrix = eval(strcat('train', num2str(i - 1)));
+    [rows, columns] = size(train_matrix);
+    train_rows = ceil(rows * (5.0/ 6.0));
+    validation_rows = rows - train_rows;
+    train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
+    validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
+    train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
+    validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
+end
 
 % converting to double and normalizing
 train_data = double(train_data);
