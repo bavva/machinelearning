@@ -16,3 +16,7 @@
 *.exe
 *.out
 *.app
+
+# Data files
+dataset
+mnist_all

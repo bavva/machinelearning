@@ -1,4 +1,0 @@
-machinelearning
-===============
-
-Machine learning assignments
