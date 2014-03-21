@@ -58,7 +58,8 @@ Z = sigmoid(training_data * w1');
 Z = horzcat(Z, ones(rows, 1));
 
 % obj_val
-obj_val = (sum(sum(training_label .* log(prediction) + (1 - training_label) .* log(1 - prediction))) * (-1.0 / N)) + ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) * (lambda / (2 * N)));
+obj_val = (sum(sum(training_label .* mylog(prediction) + (1 - training_label) .* mylog(1 - prediction))) * (-1.0 / N)) + ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) * (lambda / (2 * N)));
+fprintf('\nobj_val is: %f\n', obj_val);
 grad_w2 = (1.0 / N) * (prediction - training_label)' * Z;
 grad_w1 = (((1 - Z) .* Z) .* ((prediction - training_label) * w2))' * training_data;
 grad_w1 = grad_w1(1:end-1,:);
