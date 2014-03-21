@@ -49,8 +49,16 @@ w2 = reshape(params((1 + (n_hidden * (n_input + 1))):end), ...
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+[N, columns] = size(training_data);
 
+prediction = nnPredict(w1, w2, data);
 
+% obj_val
+obj_val = (sum(sum(training_label .* log(prediction) + (1 - training_label) .* log(1 - prediction))) * (-1.0 / N)) + ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) * (lambda / (2 * N)));
+grad_w2 = (1.0 / N) * (prediction - training_lable)' * sigmoid(training_data * w1');
+
+Z = sigmoid(training_data * w1');
+grad_w1 = (((1 - Z) .* Z) .* ((prediction - training_label) * w2))' * training_data;
 
 % Suppose the gradient of w1 and w2 are stored in 2 matrices grad_w1 and grad_w2
 % Unroll gradients to single column vector
