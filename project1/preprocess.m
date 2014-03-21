@@ -35,46 +35,79 @@ load('mnist_all.mat');
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% loading test data
-test_data = [];
-test_label = [];
-for i = 1:10
-    test_matrix = eval(strcat('test', num2str(i - 1)));
-    test_data = vertcat(test_data, test_matrix);
-    [rows, columns] = size(test_matrix);
-    test_label = vertcat(test_label, [zeros(rows,(i-1)) ones(rows, 1) zeros(rows, 9-(i-1))]);
+% calculate testing data size
+test_rows = 0;
+data_columns = size(test0, 2);
+for i = 0:9
+    test_matrix = eval(strcat('test', num2str(i)));
+    test_rows = test_rows + size(test_matrix, 1);
+end
+
+% allocate space for test data and test label and load them
+test_data = zeros(test_rows, data_columns);
+test_label = zeros(test_rows, 1);
+test_total_rows = 0;
+for i = 0:9
+    test_matrix = eval(strcat('test', num2str(i)));
+    test_rows = size(test_matrix, 1);
+    
+    test_data(test_total_rows+1:test_total_rows+test_rows, :) = test_matrix;
+    test_label(test_total_rows+1:test_total_rows+test_rows, :) = i;
+    
+    test_total_rows = test_total_rows + test_rows;
+end
+
+% calculate training data and validation data size
+train_rows = 0;
+validation_rows = 0;
+for i = 0:9
+    train_matrix = eval(strcat('train', num2str(i)));
+    
+    to_rows = size(train_matrix, 1);
+    tr_rows = ceil(to_rows * (5.0/ 6.0));
+    va_rows = to_rows - tr_rows;
+    train_rows = train_rows + tr_rows;
+    validation_rows = validation_rows + va_rows;
 end
 
 % loading train data and validation data
-train_data = [];
-train_label = [];
-validation_data = [];
-validation_label = [];
-
-for i = 1:10
-    train_matrix = eval(strcat('train', num2str(i - 1)));
-    [rows, columns] = size(train_matrix);
-    train_rows = ceil(rows * (5.0/ 6.0));
-    validation_rows = rows - train_rows;
-    train_data = vertcat(train_data, train_matrix(1:1:train_rows, :));
-    validation_data = vertcat(validation_data, train_matrix(train_rows+1:1:end, :));
-    train_label = vertcat(train_label, [zeros(train_rows,(i-1)) ones(train_rows,1) zeros(train_rows, 9-(i-1))]);
-    validation_label = vertcat(validation_label, [zeros(validation_rows,(i-1)) ones(validation_rows,1) zeros(validation_rows, 9-(i-1))]);
+train_data = zeros(train_rows, data_columns);
+train_label = zeros(train_rows, 1);
+validation_data = zeros(validation_rows, data_columns);
+validation_label = zeros(validation_rows, 1);
+train_total_rows = 0;
+validation_total_rows = 0;
+for i = 0:9
+    train_matrix = eval(strcat('train', num2str(i)));
+    
+    to_rows = size(train_matrix, 1);
+    tr_rows = ceil(to_rows * (5.0/ 6.0));
+    va_rows = to_rows - tr_rows;
+    
+    train_data(train_total_rows+1:train_total_rows+tr_rows, :) = train_matrix(1:1:tr_rows, :);
+    validation_data(validation_total_rows+1:validation_total_rows+va_rows, :) = train_matrix(tr_rows+1:1:end, :);
+    
+    train_label(train_total_rows+1:train_total_rows+tr_rows) = i;
+    validation_label(validation_total_rows+1:validation_total_rows+va_rows) = i;
+    
+    train_total_rows = train_total_rows + tr_rows;
+    validation_total_rows = validation_total_rows + va_rows;
 end
 
-% converting to double and normalizing
+% converting to double
 train_data = double(train_data);
-train_data = mat2gray(train_data);
 validation_data = double(validation_data);
-validation_data = mat2gray(validation_data);
 test_data = double(test_data);
+
+% normalizing
+train_data = mat2gray(train_data);
+validation_data = mat2gray(validation_data);
 test_data = mat2gray(test_data);
 
 % feature selection
-[rows, columns] = size(train_data);
 minvalvector = min(train_data, [], 1);
 maxvalvector = max(train_data, [], 1);
-for i = columns:-1:1
+for i = data_columns:-1:1
     maxval = maxvalvector(i);
     minval = minvalvector(i);
     if (maxval - minval < 0.0001)
