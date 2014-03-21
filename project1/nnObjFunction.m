@@ -49,18 +49,22 @@ w2 = reshape(params((1 + (n_hidden * (n_input + 1))):end), ...
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-prediction = nnPredict(w1, w2, training_data);
-
 [N, columns] = size(training_data);
 training_data = horzcat(training_data, ones(N, 1));
-Z = sigmoid(training_data * w1');
+A = training_data * w1';
+Z = sigmoid(A);
 [rows, columns] = size(Z);
 Z = horzcat(Z, ones(rows, 1));
+B = Z * w2';
+prediction = sigmoid(B);
 
 % obj_val
-obj_val = (sum(sum(training_label .* mylog(prediction) + (1 - training_label) .* mylog(1 - prediction))) * (-1.0 / N)) + ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) * (lambda / (2 * N)));
+obj_err = (sum(sum(training_label .* mylog(prediction))) + sum(sum((1 - training_label) .* mylog(1 - prediction)))) .* (-1) ./ N;
+obj_reg = (sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) .* (lambda) ./ (2 * N);
+obj_val = obj_err + obj_reg;
+
 fprintf('\nobj_val is: %f\n', obj_val);
-grad_w2 = (1.0 / N) * (prediction - training_label)' * Z;
+grad_w2 = ((prediction - training_label)' * Z) ./ N;
 grad_w1 = (((1 - Z) .* Z) .* ((prediction - training_label) * w2))' * training_data;
 grad_w1 = grad_w1(1:end-1,:);
 
