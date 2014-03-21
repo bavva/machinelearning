@@ -19,8 +19,12 @@ function label = nnPredict(w1, w2, data)
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+[rows, columns] = size(data);
+data = horzcat(data, ones(rows, 1));
 A = data * w1';
 Z = sigmoid(A);
+[rows, columns] = size(Z);
+Z = horzcat(Z, ones(rows, 1));
 B = Z * w2';
 Y = sigmoid(B);
 

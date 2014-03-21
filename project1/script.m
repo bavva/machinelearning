@@ -1,9 +1,9 @@
 clearvars;
 
-%[train_data, train_label, validation_data, ...
+% [train_data, train_label, validation_data, ...
 %    validation_label, test_data, test_label] = preprocess();
-
-%save('dataset.mat', 'train_data', 'train_label', 'validation_data', ...
+% 
+% save('dataset.mat', 'train_data', 'train_label', 'validation_data', ...
 %                    'validation_label', 'test_data', 'test_label');
 load('dataset.mat');
 
@@ -32,7 +32,7 @@ initialWeights = [initial_w1(:); initial_w2(:)];
 options = optimset('MaxIter', 50);
 
 % set the regularization hyper-parameter
-lambda = 0;
+lambda = 20;
 
 % define the objective function
 objFunction = @(params) nnObjFunction(params, n_input, n_hidden, ...
