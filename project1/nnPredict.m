@@ -19,5 +19,16 @@ function label = nnPredict(w1, w2, data)
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+A = data * w1';
+Z = sigmoid(A);
+B = Z * w2';
+Y = sigmoid(B);
+
+label = [];
+[rows, columns] = size(Y);
+for i = 1:1:rows
+    [maxval, maxindex] = max(Y(i,:),[],2);
+    label = vertcat(label, [zeros(1,(maxindex - 1)) ones(1, 1) zeros(1, 9 - (maxindex - 1))]);
+end
 
 end

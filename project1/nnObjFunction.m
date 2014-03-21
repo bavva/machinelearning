@@ -51,7 +51,7 @@ w2 = reshape(params((1 + (n_hidden * (n_input + 1))):end), ...
 
 [N, columns] = size(training_data);
 
-prediction = nnPredict(w1, w2, data);
+prediction = nnPredict(w1, w2, training_data);
 
 % obj_val
 obj_val = (sum(sum(training_label .* log(prediction) + (1 - training_label) .* log(1 - prediction))) * (-1.0 / N)) + ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) * (lambda / (2 * N)));
