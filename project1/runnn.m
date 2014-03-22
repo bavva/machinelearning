@@ -81,4 +81,6 @@ fprintf('\nTesting Set Accuracy: %f\n', ...
 % *******Save the learned parameters *************************
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %save('params.mat', 'n_input', 'n_hidden', 'w1', 'w2', 'lambda', 'k');
+
+exit();
 end
