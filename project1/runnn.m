@@ -1,4 +1,4 @@
-function runnn(no_of_iterations, lambda)
+function runnn(no_of_iterations, lambda_val, hidden_nodes)
 
 % [train_data, train_label, validation_data, ...
 %    validation_label, test_data, test_label] = preprocess();
@@ -17,7 +17,7 @@ load('dataset.mat');
 % columns of train_data, features
 n_input = size(train_data, 2); 
 % set the number of nodes in hidden unit (not including bias unit)
-n_hidden = 50;				   
+n_hidden = hidden_nodes;				   
 % set the number of nodes in output unit
 n_class = 10;				   
 
@@ -32,7 +32,7 @@ initialWeights = [initial_w1(:); initial_w2(:)];
 options = optimset('MaxIter', no_of_iterations);
 
 % set the regularization hyper-parameter
-lambda = lambda;
+lambda = lambda_val;
 
 % define the objective function
 objFunction = @(params) nnObjFunction(params, n_input, n_hidden, ...
