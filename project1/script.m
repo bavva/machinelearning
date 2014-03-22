@@ -32,7 +32,7 @@ initialWeights = [initial_w1(:); initial_w2(:)];
 options = optimset('MaxIter', 50);
 
 % set the regularization hyper-parameter
-lambda = 5;
+lambda = 0.5;
 
 % define the objective function
 objFunction = @(params) nnObjFunction(params, n_input, n_hidden, ...
