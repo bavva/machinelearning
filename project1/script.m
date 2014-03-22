@@ -29,10 +29,10 @@ initial_w2 = initializeWeights(n_hidden, n_class);
 initialWeights = [initial_w1(:); initial_w2(:)];
 
 % set the maximum number of iteration in conjugate gradient descent
-options = optimset('MaxIter', 1);
+options = optimset('MaxIter', 50);
 
 % set the regularization hyper-parameter
-lambda = 0;
+lambda = 5;
 
 % define the objective function
 objFunction = @(params) nnObjFunction(params, n_input, n_hidden, ...

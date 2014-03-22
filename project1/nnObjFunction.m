@@ -66,14 +66,17 @@ prediction = sigmoid(B);
 training_label = oneofkencode(training_label, n_class);
 
 % obj_val
-obj_err = (sum(sum(training_label .* mylog(prediction))) + sum(sum((1 - training_label) .* mylog(1 - prediction)))) .* (-1) ./ N;
-obj_reg = (sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) .* (lambda) ./ (2 * N);
+obj_err = ((sum(sum(training_label .* mylog(prediction))) + sum(sum((1 - training_label) .* mylog(1 - prediction)))) .* (-1)) ./ N;
+obj_reg = ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) .* (lambda)) ./ (2 * N);
 obj_val = obj_err + obj_reg;
 
 fprintf('\nobj_val is: %f\n', obj_val);
-grad_w2 = ((prediction - training_label)' * Z) ./ N;
 grad_w1 = (((1 - Z) .* Z) .* ((prediction - training_label) * w2))' * training_data;
 grad_w1 = grad_w1(1:end-1,:);
+grad_w2 = ((prediction - training_label)' * Z) ./ N;
+
+grad_w1 = (grad_w1 + lambda * w1) ./ N;
+grad_w2 = (grad_w2 + lambda * w2) ./ N;
 
 % Suppose the gradient of w1 and w2 are stored in 2 matrices grad_w1 and grad_w2
 % Unroll gradients to single column vector
