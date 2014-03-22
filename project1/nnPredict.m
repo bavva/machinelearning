@@ -19,20 +19,18 @@ function label = nnPredict(w1, w2, data)
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[rows, columns] = size(data);
+rows = size(data, 1);
 data = horzcat(data, ones(rows, 1));
+
 A = data * w1';
+
 Z = sigmoid(A);
-[rows, columns] = size(Z);
+rows = size(Z, 1);
 Z = horzcat(Z, ones(rows, 1));
+
 B = Z * w2';
 Y = sigmoid(B);
 
-label = [];
-[rows, columns] = size(Y);
-for i = 1:1:rows
-    [maxval, maxindex] = max(Y(i,:),[],2);
-    label = vertcat(label, [zeros(1,(maxindex - 1)) ones(1, 1) zeros(1, 9 - (maxindex - 1))]);
-end
+label = oneofkdecode(Y);
 
 end

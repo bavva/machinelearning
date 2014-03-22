@@ -49,14 +49,21 @@ w2 = reshape(params((1 + (n_hidden * (n_input + 1))):end), ...
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[N, columns] = size(training_data);
+N = size(training_data, 1);
+
 training_data = horzcat(training_data, ones(N, 1));
+
 A = training_data * w1';
+
 Z = sigmoid(A);
-[rows, columns] = size(Z);
+rows = size(Z, 1);
 Z = horzcat(Z, ones(rows, 1));
+
 B = Z * w2';
+
 prediction = sigmoid(B);
+
+training_label = oneofkencode(training_label, n_class);
 
 % obj_val
 obj_err = (sum(sum(training_label .* mylog(prediction))) + sum(sum((1 - training_label) .* mylog(1 - prediction)))) .* (-1) ./ N;
