@@ -70,7 +70,6 @@ obj_err = ((sum(sum(training_label .* mylog(prediction))) + sum(sum((1 - trainin
 obj_reg = ((sum(sum(w1 .* w1)) + sum(sum(w2 .* w2))) .* (lambda)) ./ (2 * N);
 obj_val = obj_err + obj_reg;
 
-fprintf('\nobj_val is: %f\n', obj_val);
 grad_w1 = (((1 - Z) .* Z) .* ((prediction - training_label) * w2))' * training_data;
 grad_w1 = grad_w1(1:end-1,:);
 grad_w2 = ((prediction - training_label)' * Z) ./ N;
