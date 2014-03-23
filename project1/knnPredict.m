@@ -26,10 +26,11 @@ label = zeros(test_rows,1);
 if (train_label_columns == 1)
     if (train_rows == train_label_rows)
         if (train_columns == test_columns)
+%       COMMENT THE BELOW LINE TO RUN WITHOUT USING THE DEFAULT KNNCLASSIFY FUNCTION
             label = knnclassify(test_data,train_data,train_label,k);
             
 %
-%           CODE WITHOUT USING KNNCLASSIFT() 
+%           CODE WITHOUT USING KNNCLASSIFT() STARTS HERE
 %
 %             [gIndex,groups] = grp2idx(train_label);
 %             for i = 1:1:test_rows
@@ -54,6 +55,8 @@ if (train_label_columns == 1)
 %                 label = groups(label);
 %             end            
 %            
+%           CODE WITHOUT USING KNNCLASSIFY() ENDS HERE
+%
         else
             sprintf('Training data and Test data feature count not matching!!');
         end
