@@ -4,6 +4,9 @@ function label = knnPredict(k, train_data, train_label, test_data)
 [test_rows,test_columns] = size(test_data);
 
 
+% 
+%   IF train_label IS NOT A SINGLE COLUMN MATRIX/VECTOR, USE THE BELOW CODE TO CONVERT IT
+%
 %if (train_label_columns > 1)
 %    Group = zeros(train_label_rows,1);
 %    for i = 1:1:train_label_rows
