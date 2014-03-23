@@ -17,7 +17,7 @@ load('dataset.mat');
 % columns of train_data, features
 n_input = size(train_data, 2); 
 % set the number of nodes in hidden unit (not including bias unit)
-n_hidden = 50;				   
+n_hidden = 300;				   
 % set the number of nodes in output unit
 n_class = 10;				   
 
@@ -29,7 +29,7 @@ initial_w2 = initializeWeights(n_hidden, n_class);
 initialWeights = [initial_w1(:); initial_w2(:)];
 
 % set the maximum number of iteration in conjugate gradient descent
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 100);
 
 % set the regularization hyper-parameter
 lambda = 0.5;
@@ -66,7 +66,7 @@ fprintf('\nTesting Set Accuracy: %f\n', ...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % **************K-Nearest Neighbors***************************
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-k = 1;
+k = 4;
 %   Test KNN with validation data
 predicted_label = knnPredict(k, train_data, train_label, validation_data);
 fprintf('\nValidation Set Accuracy: %f\n', ...
