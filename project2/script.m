@@ -108,9 +108,9 @@ for d = 0:6
     %test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
     
     N = size(x_train_n, 1);
-    train_errors(i,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    train_errors(d+1,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
     N = size(x_test_n, 1);
-    test_errors(i,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    test_errors(d+1,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
 end
 figure;
 plot([train_errors test_errors]);
@@ -127,9 +127,9 @@ for d = 0:6
     %test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
     
     N = size(x_train_n, 1);
-    train_errors(i,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    train_errors(d+1,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
     N = size(x_test_n, 1);
-    test_errors(i,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    test_errors(d+1,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
 end
 figure;
 plot([train_errors test_errors]);
