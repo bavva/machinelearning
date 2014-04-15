@@ -96,7 +96,7 @@ lambda = 0;
 for d = 0:6
     x_train_n = mapNonLinear(x_train,d);
     x_test_n = mapNonLinear(x_test,d);
-    w = learnRidgeRegression(x_train_n,y,lambda);
+    w = learnRidgeRegression(x_train_n,y_train,lambda);
     % fill code here for prediction and computing errors
 end
 figure;
@@ -108,7 +108,7 @@ lambda = lambda_optimal; % from part 2
 for d = 0:6
     x_train_n = mapNonLinear(x_train,d);
     x_test_n = mapNonLinear(x_test,d);
-    w = learnRidgeRegression(x_train_n,y,lambda);
+    w = learnRidgeRegression(x_train_n,y_train,lambda);
     % fill code here for prediction and computing errors
 end
 figure;
