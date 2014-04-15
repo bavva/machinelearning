@@ -47,9 +47,13 @@ for i = 1:length(lambdas)
     lambda = lambdas(i);
     % fill code here for prediction and computing errors
     w_ridge_train_i = learnRidgeRegression(x_train_i,y_train,lambda);
-    w_ridge_test_i = learnRidgeRegression(x_test_i,y_test,lambda);
-    train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
-    test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_test_i' * x_test_i')).*(y_test' - (w_ridge_test_i' * x_test_i'))));
+%    w_ridge_test_i = learnRidgeRegression(x_test_i,y_test,lambda);
+%    train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
+%    test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_test_i' * x_test_i')).*(y_test' - (w_ridge_test_i' * x_test_i'))));
+    N = size(x_train_i, 1);
+    train_errors(i,1) = ((sum((y_train' - (w_ridge_train_i' * x_train_i')) .* (y_train' - (w_ridge_train_i' * x_train_i')))) ./ N) + (lambda .* (w_ridge_train_i' * w_ridge_train_i));
+    N = size(x_test_i, 1);
+    test_errors(i,1) = ((sum((y_test' - (w_ridge_train_i' * x_test_i')) .* (y_test' - (w_ridge_train_i' * x_test_i')))) ./ N) + (lambda .* (w_ridge_train_i' * w_ridge_train_i));
 end
 [min_train_error, lambda_optimal_index] = min(train_errors);
 lambda_optimal = lambdas(lambda_optimal_index);
@@ -98,8 +102,15 @@ lambda = 0;
 for d = 0:6
     x_train_n = mapNonLinear(x_train,d);
     x_test_n = mapNonLinear(x_test,d);
-    w = learnRidgeRegression(x_train_n,y_train,lambda);
+    w_non_linear = learnRidgeRegression(x_train_n,y_train,lambda);
     % fill code here for prediction and computing errors
+    %train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
+    %test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
+    
+    N = size(x_train_n, 1);
+    train_errors(i,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    N = size(x_test_n, 1);
+    test_errors(i,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
 end
 figure;
 plot([train_errors test_errors]);
@@ -110,8 +121,15 @@ lambda = lambda_optimal; % from part 2
 for d = 0:6
     x_train_n = mapNonLinear(x_train,d);
     x_test_n = mapNonLinear(x_test,d);
-    w = learnRidgeRegression(x_train_n,y_train,lambda);
+    w_non_linear = learnRidgeRegression(x_train_n,y_train,lambda);
     % fill code here for prediction and computing errors
+    %train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
+    %test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
+    
+    N = size(x_train_n, 1);
+    train_errors(i,1) = ((sum((y_train' - (w_non_linear' * x_train_n')) .* (y_train' - (w_non_linear' * x_train_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
+    N = size(x_test_n, 1);
+    test_errors(i,1) = ((sum((y_test' - (w_non_linear' * x_test_n')) .* (y_test' - (w_non_linear' * x_test_n')))) ./ N) + (lambda .* (w_non_linear' * w_non_linear));
 end
 figure;
 plot([train_errors test_errors]);
