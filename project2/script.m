@@ -73,7 +73,9 @@ for i = 1:length(lambdas)
     lambda = lambdas(i);
     objFunction = @(params) regressionObjVal(params, x_train_i, y_train, lambda);
     w = fmincg(objFunction, initialWeights, options);
-    % fill code here for prediction and computing errors
+% fill code here for prediction and computing errors
+    train_errors(i,1) = ((sum((y_train' - (w' * x_train_i')) .* (y' - (w' * x_train_i')))) ./ N) + (lambda .* (w' * w));
+    test_errors(i,1) = ((sum((y_test' - (w' * x_test_i')) .* (y' - (w' * x_test_i')))) ./ N) + (lambda .* (w' * w));
 end
 figure;
 plot([train_errors test_errors]);
