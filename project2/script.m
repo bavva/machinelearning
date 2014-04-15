@@ -51,6 +51,8 @@ for i = 1:length(lambdas)
     train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
     test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_test_i' * x_test_i')).*(y_test' - (w_ridge_test_i' * x_test_i'))));
 end
+[min_train_error, lambda_optimal_index] = min(train_errors);
+lambda_optimal = lambdas(lambda_optimal_index);
 figure;
 plot([train_errors test_errors]);
 legend('Training Error','Testing Error');
