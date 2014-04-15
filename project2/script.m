@@ -26,29 +26,10 @@ J_w_train_i = 0;
 J_w_test = 0;
 J_w_test_i = 0;
 
-for i = 1:1:size(x_train,1)
-    J_w_train += pow2(y_train(i,1) - (transpose(w_train)*transpose(x_train(i,:))));
-end
-
-J_w_train = sqrt(J_w_train);
-
-for i = 1:1:size(x_train_i,1)
-    J_w_train_i += pow2(y_train(i,1) - (transpose(w_train_i)*transpose(x_train_i(i,:))));
-end
-
-J_w_train_i = sqrt(J_w_train_i);
-
-for i = 1:1:size(x_test,1)
-    J_w_test += pow2(y_test(i,1) - (transpose(w_test)*transpose(x_test(i,:))));
-end
-
-J_w_test = sqrt(J_w_test);
-
-for i = 1:1:size(x_test_i,1)
-    J_w_test_i += pow2(y_test(i,1) - (transpose(w_test_i)*transpose(x_test_i(i,:))));
-end
-
-J_w_test_i = sqrt(J_w_test_i);
+J_w_train = sqrt(sum((y_train' - (w_train' * x_train')).*(y_train' - (w_train' * x_train'))));
+J_w_test = sqrt(sum((y_test' - (w_test' * x_test')).*(y_test' - (w_test' * x_test'))));
+J_w_train_i = sqrt(sum((y_train' - (w_train_i' * x_train_i')).*(y_train' - (w_train_i' * x_train_i'))));
+J_w_test_i = sqrt(sum((y_test' - (w_test_i' * x_test_i')).*(y_test' - (w_test_i' * x_test_i'))));
 
 %%% END PROBLEM 1 CODE %%%
 
