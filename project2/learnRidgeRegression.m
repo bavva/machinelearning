@@ -33,11 +33,4 @@ else
 end
 
 
-
-
-
-
-
-w = mtimes(mtimes(inv(+),transpose(X)),y);
-
 end
