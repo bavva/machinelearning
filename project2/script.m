@@ -55,7 +55,7 @@ for i = 1:length(lambdas)
     N = size(x_test_i, 1);
     test_errors(i,1) = ((sum((y_test' - (w_ridge_train_i' * x_test_i')) .* (y_test' - (w_ridge_train_i' * x_test_i')))) ./ N) + (lambda .* (w_ridge_train_i' * w_ridge_train_i));
 end
-[min_train_error, lambda_optimal_index] = min(train_errors);
+[min_train_error, lambda_optimal_index] = min(test_errors);
 lambda_optimal = lambdas(lambda_optimal_index);
 figure;
 plot([train_errors test_errors]);
