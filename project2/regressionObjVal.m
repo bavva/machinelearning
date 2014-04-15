@@ -1,5 +1,7 @@
 function [error, error_grad] = regressionObjVal(w, X, y, lambda)
 
-% compute squared error (scalar) and gradient of squared error with respect
-% to w (vector) for the given data X and y and the regularization parameter
-% lambda
+N = size(X, 1);
+error = ((sum((y' - (w' * X')) .* (y' - (w' * X')))) ./ N) + (lambda .* (w' * w));
+error_grad = (lambda .* w - (X' * (y - (X * w)))) .* 2 ./ lambda;
+
+end
