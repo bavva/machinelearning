@@ -12,7 +12,7 @@ function w = learnRidgeRegression(X,y,lambda)
 
 [N D] = size(X);
 
-w = zeros(D:1);
+w = zeros(D,1);
 
 [y_rows y_cols] = size(y);
 
