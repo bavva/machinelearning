@@ -39,9 +39,17 @@ lambdas = 0:0.00001:0.001;
 train_errors = zeros(length(lambdas),1);
 test_errors = zeros(length(lambdas),1);
 
+w_ridge_train_i = 0;
+w_ridge_test_i = 0;
+
+
 for i = 1:length(lambdas)
     lambda = lambdas(i);
     % fill code here for prediction and computing errors
+    w_ridge_train_i = learnRidgeRegression(x_train_i,y_train,lambda);
+    w_ridge_test_i = learnRidgeRegression(x_test_i,y_test,lambda);
+    train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
+    test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_test_i' * x_test_i')).*(y_test' - (w_ridge_test_i' * x_test_i'))));
 end
 figure;
 plot([train_errors test_errors]);
