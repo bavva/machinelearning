@@ -11,7 +11,7 @@ function w = learnOLERegression(X,y)
 [N D] = size(X);
 [y_rows y_columns] = size(y);
 
-w = zeros(N,1);
+w = zeros(D,1);
 
 if (not(y_rows == N))
     sprintf('X and y should have the same number of rows!!');
