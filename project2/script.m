@@ -48,6 +48,12 @@ plot(lambdas', train_errors, lambdas', test_errors);
 legend('Training Error','Testing Error');
 xlabel Lambdas
 ylabel Error
+
+figure;
+plot(lambdas', error_train_i*ones(size(train_errors, 1), 1), lambdas', error_test_i*ones(size(test_errors, 1), 1), lambdas', train_errors, lambdas', test_errors);
+legend('OLE Training Error','OLE Testing Error', 'Ridge Training Error','Ridge Testing Error');
+xlabel Lambdas
+ylabel Error
 %%% END PROBLEM 2 CODE %%%
 
 %%% BEGIN PROBLEM 3 CODE
