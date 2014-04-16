@@ -65,8 +65,8 @@ options = optimset('MaxIter', 500);
 
 % define the objective function
 lambdas = 0:0.00001:0.001;
-train_errors = zeros(length(lambdas),1);
-test_errors = zeros(length(lambdas),1);
+train_errors_grad_desc = zeros(length(lambdas),1);
+test_errors_grad_desc = zeros(length(lambdas),1);
 
 % run ridge regression training with fmincg
 for i = 1:length(lambdas)
@@ -74,12 +74,18 @@ for i = 1:length(lambdas)
     objFunction = @(params) regressionObjVal(params, x_train_i, y_train, lambda);
     w_ridge_train_i = fmincg(objFunction, initialWeights, options);
 % fill code here for prediction and computing errors
-    train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
-    test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_train_i' * x_test_i')).*(y_test' - (w_ridge_train_i' * x_test_i'))));
+    train_errors_grad_desc(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
+    test_errors_grad_desc(i,1) = sqrt(sum((y_test' - (w_ridge_train_i' * x_test_i')).*(y_test' - (w_ridge_train_i' * x_test_i'))));
 end
 figure;
-plot(lambdas', train_errors, lambdas', test_errors);
+plot(lambdas', train_errors_grad_desc, lambdas', test_errors_grad_desc);
 legend('Training Error','Testing Error');
+xlabel Lambdas
+ylabel Error
+
+figure;
+plot(lambdas', train_errors, lambdas', test_errors, lambdas', train_errors_grad_desc, lambdas', test_errors_grad_desc);
+legend('RIDGE Training Error','RIDGE Testing Error', 'Grad Desc Training Error','Grad Desc Testing Error');
 xlabel Lambdas
 ylabel Error
 %%% END PROBLEM 3 CODE
