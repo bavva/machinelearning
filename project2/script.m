@@ -29,8 +29,6 @@ error_test_i = sqrt(sum((y_test' - (w_train_i' * x_test_i')).*(y_test' - (w_trai
 lambdas = 0:0.00001:0.001;
 train_errors = zeros(length(lambdas),1);
 test_errors = zeros(length(lambdas),1);
-train_errors_RMSE = zeros(length(lambdas),1);
-test_errors_RMSE = zeros(length(lambdas),1);
 
 w_ridge_train_i = 0;
 w_ridge_test_i = 0;
