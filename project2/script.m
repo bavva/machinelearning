@@ -41,9 +41,6 @@ test_errors = zeros(length(lambdas),1);
 train_errors_RMSE = zeros(length(lambdas),1);
 test_errors_RMSE = zeros(length(lambdas),1);
 
-error_diff = 9999;
-lambda_optimal_index = 1;
-
 w_ridge_train_i = 0;
 w_ridge_test_i = 0;
 
@@ -51,21 +48,11 @@ for i = 1:length(lambdas)
     lambda = lambdas(i);
     % fill code here for prediction and computing errors
     w_ridge_train_i = learnRidgeRegression(x_train_i,y_train,lambda);
-%    w_ridge_test_i = learnRidgeRegression(x_test_i,y_test,lambda);
-%    train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
-%    test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_test_i' * x_test_i')).*(y_test' - (w_ridge_test_i' * x_test_i'))));
+%   w_ridge_test_i = learnRidgeRegression(x_test_i,y_test,lambda);
     train_errors(i,1) = sqrt(sum((y_train' - (w_ridge_train_i' * x_train_i')).*(y_train' - (w_ridge_train_i' * x_train_i'))));
     test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_train_i' * x_test_i')).*(y_test' - (w_ridge_train_i' * x_test_i'))));
-    
-    N = size(x_train_i, 1);
-    train_errors_RMSE(i,1) = train_errors(i,1) ./ N;
-    test_errors_RMSE(i,1) = test_errors(i,1) ./ N;
-    
-    if (abs(train_errors_RMSE(i,1) - test_errors_RMSE(i,1)) < error_diff)
-        error_diff = abs(train_errors_RMSE(i,1) - test_errors_RMSE(i,1));
-        lambda_optimal_index = i;
-    end
 end
+[min_train_error, lambda_optimal_index] = min(test_errors);
 lambda_optimal = lambdas(lambda_optimal_index);
 figure;
 plot([train_errors test_errors]);
