@@ -13,23 +13,14 @@ error_test_i = 0;
 % calculated weights using linear regression
 w_train = 0;
 w_train_i = 0;
-w_test = 0;
-w_test_i = 0;
 
 w_train = learnOLERegression(x_train,y_train);
 w_train_i = learnOLERegression(x_train_i,y_train);
-w_test = learnOLERegression(x_test,y_test);
-w_test_i = learnOLERegression(x_test_i,y_test);
 
-J_w_train = 0;
-J_w_train_i = 0;
-J_w_test = 0;
-J_w_test_i = 0;
-
-J_w_train = sqrt(sum((y_train' - (w_train' * x_train')).*(y_train' - (w_train' * x_train'))));
-J_w_test = sqrt(sum((y_test' - (w_test' * x_test')).*(y_test' - (w_test' * x_test'))));
-J_w_train_i = sqrt(sum((y_train' - (w_train_i' * x_train_i')).*(y_train' - (w_train_i' * x_train_i'))));
-J_w_test_i = sqrt(sum((y_test' - (w_test_i' * x_test_i')).*(y_test' - (w_test_i' * x_test_i'))));
+error_train = sqrt(sum((y_train' - (w_train' * x_train')).*(y_train' - (w_train' * x_train'))));
+error_test = sqrt(sum((y_test' - (w_train' * x_test')).*(y_test' - (w_train' * x_test'))));
+error_train_i = sqrt(sum((y_train' - (w_train_i' * x_train_i')).*(y_train' - (w_train_i' * x_train_i'))));
+error_test_i = sqrt(sum((y_test' - (w_train_i' * x_test_i')).*(y_test' - (w_train_i' * x_test_i'))));
 
 %%% END PROBLEM 1 CODE %%%
 
