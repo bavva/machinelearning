@@ -96,6 +96,7 @@ x_train = x_train(:,3);
 x_test = x_test(:,3);
 train_errors = zeros(7,1);
 test_errors = zeros(7,1);
+degree = zeros(7,1);
 
 % no regularization
 lambda = 0;
@@ -103,12 +104,13 @@ for d = 0:6
     x_train_n = mapNonLinear(x_train,d);
     x_test_n = mapNonLinear(x_test,d);
     w_non_linear = learnRidgeRegression(x_train_n,y_train,lambda);
+    degree(d+1, 1) = d;
     % fill code here for prediction and computing errors
     train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
     test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
 end
 figure;
-plot([train_errors test_errors]);
+plot(degree, train_errors, degree, test_errors);
 legend('Training Error','Testing Error');
 xlabel Degree(d)
 ylabel Error
@@ -120,11 +122,12 @@ for d = 0:6
     x_test_n = mapNonLinear(x_test,d);
     w_non_linear = learnRidgeRegression(x_train_n,y_train,lambda);
     % fill code here for prediction and computing errors
+    degree(d+1, 1) = d;
     train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
     test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
 end
 figure;
-plot([train_errors test_errors]);
+plot(degree, train_errors, degree, test_errors);
 legend('Training Error','Testing Error');
 xlabel Degree(d)
 ylabel Error
