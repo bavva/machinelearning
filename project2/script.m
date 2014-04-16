@@ -109,8 +109,10 @@ for d = 0:6
     train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
     test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
 end
+[optimal_error_noreg, optimal_d_index_noreg] = min(test_errors);
 figure;
 plot(degree, train_errors, degree, test_errors);
+text(degree(optimal_d_index_noreg), test_errors(optimal_d_index_noreg), '\leftarrow optimal degree');
 legend('Training Error','Testing Error');
 xlabel Degree(d)
 ylabel Error
@@ -126,8 +128,10 @@ for d = 0:6
     train_errors(d+1,1) = sqrt(sum((y_train' - (w_non_linear' * x_train_n')).*(y_train' - (w_non_linear' * x_train_n'))));
     test_errors(d+1,1) = sqrt(sum((y_test' - (w_non_linear' * x_test_n')).*(y_test' - (w_non_linear' * x_test_n'))));
 end
+[optimal_error_reg, optimal_d_index_reg] = min(test_errors);
 figure;
 plot(degree, train_errors, degree, test_errors);
+text(degree(optimal_d_index_reg), test_errors(optimal_d_index_reg), '\leftarrow optimal degree');
 legend('Training Error','Testing Error');
 xlabel Degree(d)
 ylabel Error
