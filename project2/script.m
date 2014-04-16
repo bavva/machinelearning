@@ -44,8 +44,10 @@ end
 [min_train_error, lambda_optimal_index] = min(test_errors);
 lambda_optimal = lambdas(lambda_optimal_index);
 figure;
-plot([train_errors test_errors]);
+plot(lambdas', train_errors, lambdas', test_errors);
 legend('Training Error','Testing Error');
+xlabel Lambdas
+ylabel Error
 %%% END PROBLEM 2 CODE %%%
 
 %%% BEGIN PROBLEM 3 CODE
@@ -70,8 +72,10 @@ for i = 1:length(lambdas)
     test_errors(i,1) = sqrt(sum((y_test' - (w_ridge_train_i' * x_test_i')).*(y_test' - (w_ridge_train_i' * x_test_i'))));
 end
 figure;
-plot([train_errors test_errors]);
+plot(lambdas', train_errors, lambdas', test_errors);
 legend('Training Error','Testing Error');
+xlabel Lambdas
+ylabel Error
 %%% END PROBLEM 3 CODE
 
 %%% BEGIN  PROBLEM 4 CODE
@@ -94,6 +98,8 @@ end
 figure;
 plot([train_errors test_errors]);
 legend('Training Error','Testing Error');
+xlabel Degree(d)
+ylabel Error
 
 % optimal regularization
 lambda = lambda_optimal; % from part 2
@@ -108,4 +114,6 @@ end
 figure;
 plot([train_errors test_errors]);
 legend('Training Error','Testing Error');
+xlabel Degree(d)
+ylabel Error
 
