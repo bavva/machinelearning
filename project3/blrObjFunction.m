@@ -17,8 +17,18 @@ function [error, error_grad] = blrObjFunction(w, X, t)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-error = 0; % dummy return
-error_grad = zeros(size(X, 2) + 1, 1); % dummy return
+
+% Add ones in the beginning
+X = horzcat(ones(X, 1), X);
+
+% Calculate Y
+Y = sigmoid (X * w);
+
+% Calculate error
+error = sum((t .* log(Y)) + ((1 - t) .* log(1 - Y))) .* (-1);
+
+% Calculate error gradiance
+error_grad = X' * (Y - t);
 
 
 end

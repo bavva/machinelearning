@@ -14,8 +14,19 @@ function [label] = blrPredict(W, X)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-label = zeros(size(X, 1), 1); % dummy return
 
+% Add ones in the beginning
+X = horzcat(ones(X, 1), X);
+
+% Calculate Y(prediction) for all weights. Y will be N x 10
+Y = sigmoid(X * W);
+
+% In each row, which ever index has high value, that is our label for that
+% row
+[values, index] = max(Y, [], 2);
+
+% Classification k means label k+1
+label = index + 1;
 
 end
 
