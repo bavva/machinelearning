@@ -19,7 +19,7 @@ function [error, error_grad] = blrObjFunction(w, X, t)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Add ones in the beginning
-X = horzcat(ones(X, 1), X);
+X = horzcat(ones(size(X, 1), 1), X);
 
 % Calculate Y
 Y = sigmoid (X * w);

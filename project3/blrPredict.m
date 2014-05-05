@@ -16,7 +16,7 @@ function [label] = blrPredict(W, X)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Add ones in the beginning
-X = horzcat(ones(X, 1), X);
+X = horzcat(ones(size(X, 1), 1), X);
 
 % Calculate Y(prediction) for all weights. Y will be N x 10
 Y = sigmoid(X * W);
