@@ -29,7 +29,7 @@ for i = 1:n_iter
     H = X' * R * X;
     Egrad = X' * (Y - t);
     
-    w = wold - (H\Egrad);
+    w = wold - (pinv(H) * Egrad);
 end
 
 end

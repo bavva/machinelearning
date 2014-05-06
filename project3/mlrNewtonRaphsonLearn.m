@@ -51,7 +51,7 @@ for temp = 1:n_iter
         end
     end
 
-    W = Wold - (H\Egrad);
+    W = Wold - (pinv(H) * Egrad);
 end
 
 end
