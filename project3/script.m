@@ -130,43 +130,52 @@ end
 
 % Using linear kernel
 model = svmtrain(train_label, train_data, '-t 0');
-[~, accuracy, ~] = svmpredict(train_label, train_data, model);
+[predicted_label, ~, ~] = svmpredict(train_label, train_data, model);
+accuracy = mean(double(predicted_label == train_label)) * 100;
 fprintf('\nSVM linear kernel Training Set Accuracy: %f\n', accuracy);
 svm_t0_train_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
+[predicted_label, ~, ~] = svmpredict(validation_label, validation_data, model);
+accuracy = mean(double(predicted_label == validation_label)) * 100;
 fprintf('\nSVM linear kernel Validation Set Accuracy: %f\n', accuracy);
 svm_t0_val_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(test_label, test_data, model);
+[predicted_label, ~, ~] = svmpredict(test_label, test_data, model);
+accuracy = mean(double(predicted_label == test_label)) * 100;
 fprintf('\nSVM linear kernel Test Set Accuracy: %f\n', accuracy);
 svm_t0_test_acc = accuracy;
 
 % Using radial basis function with value of gamma setting to 1
 model = svmtrain(train_label, train_data, '-t 2 -g 1');
-[~, accuracy, ~] = svmpredict(train_label, train_data, model);
+[predicted_label, ~, ~] = svmpredict(train_label, train_data, model);
+accuracy = mean(double(predicted_label == train_label)) * 100;
 fprintf('\nSVM radial basis function with gamma 1 Training Set Accuracy: %f\n', accuracy);
 svm_t2g1_train_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
+[predicted_label, ~, ~] = svmpredict(validation_label, validation_data, model);
+accuracy = mean(double(predicted_label == validation_label)) * 100;
 fprintf('\nSVM radial basis function with gamma 1 Validation Set Accuracy: %f\n', accuracy);
 svm_t2g1_val_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(test_label, test_data, model);
+[predicted_label, ~, ~] = svmpredict(test_label, test_data, model);
+accuracy = mean(double(predicted_label == test_label)) * 100;
 fprintf('\nSVM radial basis function with gamma 1 Test Set Accuracy: %f\n', accuracy);
 svm_t2g1_test_acc = accuracy;
 
 % Using radial basis function with value of gamma setting to default
 model = svmtrain(train_label, train_data, '-t 2');
-[~, accuracy, ~] = svmpredict(train_label, train_data, model);
+[predicted_label, ~, ~] = svmpredict(train_label, train_data, model);
+accuracy = mean(double(predicted_label == train_label)) * 100;
 fprintf('\nSVM radial basis function with gamma default Training Set Accuracy: %f\n', accuracy);
 svm_t2_train_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
+[predicted_label, ~, ~] = svmpredict(validation_label, validation_data, model);
+accuracy = mean(double(predicted_label == validation_label)) * 100;
 fprintf('\nSVM radial basis function with gamma default Validation Set Accuracy: %f\n', accuracy);
 svm_t2_val_acc = accuracy;
 
-[~, accuracy, ~] = svmpredict(test_label, test_data, model);
+[predicted_label, ~, ~] = svmpredict(test_label, test_data, model);
+accuracy = mean(double(predicted_label == test_label)) * 100;
 fprintf('\nSVM radial basis function with gamma default Test Set Accuracy: %f\n', accuracy);
 svm_t2_test_acc = accuracy;
 
@@ -181,11 +190,14 @@ for i = 1:length(costs)
     libsvm_options = sprintf('-t 2 -c %d', cost);
     model = svmtrain(train_label, train_data, libsvm_options);
     
-    [~, accuracy, ~] = svmpredict(train_label, train_data, model);
+    [predicted_label, ~, ~] = svmpredict(train_label, train_data, model);
+    accuracy = mean(double(predicted_label == train_label)) * 100;
     train_accuracies(i, 1) = accuracy;
-    [~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
+    [predicted_label, ~, ~] = svmpredict(validation_label, validation_data, model);
+    accuracy = mean(double(predicted_label == validation_label)) * 100;
     validation_accuracies(i, 1) = accuracy;
-    [~, accuracy, ~] = svmpredict(test_label, test_data, model);
+    [predicted_label, ~, ~] = svmpredict(test_label, test_data, model);
+    accuracy = mean(double(predicted_label == test_label)) * 100;
     test_accuracies(i, 1) = accuracy;
 end
 
