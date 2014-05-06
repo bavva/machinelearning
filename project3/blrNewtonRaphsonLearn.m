@@ -21,16 +21,26 @@ function [w] = blrNewtonRaphsonLearn(initial_w, X, t, n_iter)
 X = horzcat(ones(size(X, 1), 1), X);
 w = initial_w;
 
+% This code runs out of memory :(
+% for i = 1:n_iter
+%     wold = w;
+%     
+%     Y = sigmoid(X * wold);
+%     R = diag(Y .* (1 - Y));
+%     H = X' * R * X;
+%     Hinv = inv(H);
+%     Egrad = X' * (Y - t);
+%     
+%     w = wold - (Hinv * Egrad);
+% end
+
 for i = 1:n_iter
     wold = w;
     
     Y = sigmoid(X * wold);
     R = diag(Y .* (1 - Y));
-    H = X' * R * X;
-    Hinv = inv(H);
-    Egrad = X' * (Y - t);
-    
-    w = wold - (Hinv * Egrad);
+    Z = (X * wold) - ((Y - t) / R);
+    w = (X' * R * Z) / (X' * R * X);
 end
 
 end
