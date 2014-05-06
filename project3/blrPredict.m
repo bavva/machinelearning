@@ -23,10 +23,7 @@ Y = sigmoid(X * W);
 
 % In each row, which ever index has high value, that is our label for that
 % row
-[values, index] = max(Y, [], 2);
-
-% Classification k means label k+1
-label = index + 1;
+[~, label] = max(Y, [], 2);
 
 end
 

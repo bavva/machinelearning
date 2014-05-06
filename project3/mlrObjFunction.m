@@ -19,8 +19,23 @@ W = reshape(W, size(X, 2) + 1, size(T, 2));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-error = 0; % dummy return
-error_grad = zeros((size(X, 2) + 1) * 10, 1); % dummy return
 
+% Add ones in the beginning
+X = horzcat(ones(size(X, 1), 1), X);
+
+% Calculate A
+A = X * W;
+
+expA = exp(A);
+sumExpA = sum(expA, 2);
+exapandedSumExpA = zeros(size(A));
+for i = 1:size(A, 2)
+    exapandedSumExpA(:, i) = sumExpA;
+end
+Y = expA ./ exapandedSumExpA;
+error_grad_pre_reshape = X' * (Y - T);
+
+error = sum(sum(T .* log(Y))) .* (-1);
+error_grad = reshape(error_grad_pre_reshape, size(error_grad_pre_reshape, 1) * size(error_grad_pre_reshape, 2), 1);
 
 end

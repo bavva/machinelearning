@@ -13,8 +13,21 @@ function [label] = mlrPredict(W, X)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-label = zeros(size(X, 1), 1); % dummy return
 
+X = horzcat(ones(size(X, 1), 1), X);
+
+% Calculate A
+A = X * W;
+
+expA = exp(A);
+sumExpA = sum(expA, 2);
+exapandedSumExpA = zeros(size(A));
+for i = 1:size(A, 2)
+    exapandedSumExpA(:, i) = sumExpA;
+end
+Y = expA ./ exapandedSumExpA;
+
+[~, label] = max(Y, [], 2);
 
 end
 
