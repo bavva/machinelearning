@@ -17,6 +17,27 @@ function [W] = mlrNewtonRaphsonLearn(initial_W, X, T, n_iter)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-W = zeros(size(X, 2) + 1, 10); % dummy return
+
+X = horzcat(ones(size(X, 1), 1), X);
+W = initial_W;
+
+for i = 1:n_iter
+    Wold = W;
+    
+    % Calculate A
+    A = X * Wold;
+    expA = exp(A);
+    sumExpA = sum(expA, 2);
+    exapandedSumExpA = zeros(size(A));
+    for i = 1:size(A, 2)
+        exapandedSumExpA(:, i) = sumExpA;
+    end
+    Y = expA ./ exapandedSumExpA;
+    Egrad = X' * (Y - T);
+
+    
+    W = Wold - (Egrad / H);
+end
+
 end
 
