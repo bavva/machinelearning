@@ -26,36 +26,38 @@ end
 
 predicted_label = blrPredict(W, train_data);
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(predicted_label == train_label)) * 100);
-linear_reg_train_acc = mean(double(predicted_label == train_label)) * 100;
+logistic_reg_train_acc = mean(double(predicted_label == train_label)) * 100;
 
 predicted_label = blrPredict(W, validation_data);
 fprintf('\nValidation Set Accuracy: %f\n', mean(double(predicted_label == validation_label)) * 100);
-linear_reg_val_acc = mean(double(predicted_label == validation_label)) * 100;
+logistic_reg_val_acc = mean(double(predicted_label == validation_label)) * 100;
 
 predicted_label = blrPredict(W, test_data);
 fprintf('\nTest Set Accuracy: %f\n', mean(double(predicted_label == test_label)) * 100);
-linear_reg_test_acc = mean(double(predicted_label == test_label)) * 100;
+logistic_reg_test_acc = mean(double(predicted_label == test_label)) * 100;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Logistic Regression with Newton-Raphson method**************
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (extra credits)
-% (un-comment this block of code to run)
-% W = zeros(size(train_data, 2) + 1, n_class);
-% initialWeights = zeros(size(train_data, 2) + 1, 1);
-% n_iter = 5;
-% for i = 1 : n_class
-%     W(:, i) = blrNewtonRaphsonLearn(initialWeights, train_data, T(:, i), n_iter);
-% end
-% 
-% predicted_label = blrPredict(W, train_data);
-% fprintf('\nTraining Set Accuracy: %f\n', mean(double(predicted_label == train_label)) * 100);
-% 
-% predicted_label = blrPredict(W, validation_data);
-% fprintf('\nValidation Set Accuracy: %f\n', mean(double(predicted_label == validation_label)) * 100);
-% 
-% predicted_label = blrPredict(W, test_data);
-% fprintf('\nTest Set Accuracy: %f\n', mean(double(predicted_label == test_label)) * 100);
+W = zeros(size(train_data, 2) + 1, n_class);
+initialWeights = zeros(size(train_data, 2) + 1, 1);
+n_iter = 5;
+for i = 1 : n_class
+    W(:, i) = blrNewtonRaphsonLearn(initialWeights, train_data, T(:, i), n_iter);
+end
+
+predicted_label = blrPredict(W, train_data);
+fprintf('\nTraining Set Accuracy: %f\n', mean(double(predicted_label == train_label)) * 100);
+lr_hessian_train_acc = mean(double(predicted_label == train_label)) * 100;
+
+predicted_label = blrPredict(W, validation_data);
+fprintf('\nValidation Set Accuracy: %f\n', mean(double(predicted_label == validation_label)) * 100);
+lr_hessian_val_acc = mean(double(predicted_label == validation_label)) * 100;
+
+predicted_label = blrPredict(W, test_data);
+fprintf('\nTest Set Accuracy: %f\n', mean(double(predicted_label == test_label)) * 100);
+lr_hessian_test_acc = mean(double(predicted_label == test_label)) * 100;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Multiclass Logistic Regression with Gradient Descent *******
@@ -160,7 +162,7 @@ for i = 1:length(costs)
     test_accuracies(i, 1) = accuracy;
 end
 
-save('results.mat', 'linear_reg_train_acc', 'linear_reg_val_acc', 'linear_reg_test_acc', 'svm_t0_train_acc', 'svm_t0_val_acc', 'svm_t0_test_acc', 'svm_t2g1_train_acc', 'svm_t2g1_val_acc', 'svm_t2g1_test_acc', 'svm_t2_train_acc', 'svm_t2_val_acc', 'svm_t2_test_acc', 'costs', 'train_accuracies', 'validation_accuracies', 'test_accuracies');
+save('results.mat', 'logistic_reg_train_acc', 'logistic_reg_val_acc', 'logistic_reg_test_acc', 'lr_hessian_train_acc', 'lr_hessian_val_acc', 'lr_hessian_test_acc', 'svm_t0_train_acc', 'svm_t0_val_acc', 'svm_t0_test_acc', 'svm_t2g1_train_acc', 'svm_t2g1_val_acc', 'svm_t2g1_test_acc', 'svm_t2_train_acc', 'svm_t2_val_acc', 'svm_t2_test_acc', 'costs', 'train_accuracies', 'validation_accuracies', 'test_accuracies');
 
 figure;
 plot(costs', train_accuracies, costs', validation_accuracies, costs', test_accuracies);
