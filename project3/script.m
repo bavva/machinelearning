@@ -60,6 +60,17 @@ fprintf('\nlr_hessian Test Set Accuracy: %f\n', mean(double(predicted_label == t
 lr_hessian_test_acc = mean(double(predicted_label == test_label)) * 100;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Multiclass data set loading
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+load ('newdataset_MLR.mat');
+
+n_class = 10;
+T = zeros(size(train_label, 1), n_class);
+for i = 1 : n_class
+    T(:, i) = (train_label == i);
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Multiclass Logistic Regression with Gradient Descent *******
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (extra credits)
@@ -105,6 +116,18 @@ mlr_hessian_test_acc = mean(double(predicted_label == test_label)) * 100;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Support Vector Machine**************************************
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SVM data set loading
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+load ('newdataset_SVM.mat');
+
+n_class = 10;
+T = zeros(size(train_label, 1), n_class);
+for i = 1 : n_class
+    T(:, i) = (train_label == i);
+end
+
 % Using linear kernel
 model = svmtrain(train_label, train_data, '-t 0');
 [~, accuracy, ~] = svmpredict(train_label, train_data, model);
