@@ -18,10 +18,10 @@ function [W] = mlrNewtonRaphsonLearn(initial_W, X, T, n_iter)
 %   YOUR CODE HERE %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+W = reshape(initial_W, size(X, 2) + 1, size(T, 2));
 X = horzcat(ones(size(X, 1), 1), X);
-W = initial_W;
 
-for i = 1:n_iter
+for temp = 1:n_iter
     Wold = W;
     
     % Calculate A
@@ -34,9 +34,24 @@ for i = 1:n_iter
     end
     Y = expA ./ exapandedSumExpA;
     Egrad = X' * (Y - T);
-
     
-    W = Wold - (Egrad / H);
+    n_attr = size(X, 2);
+    % Calculate hessian matrix
+    H = zeros(n_attr, n_attr);
+    for k = 1:n_attr
+        for j = 1:n_attr
+            summation = 0;
+            Ikj = (k == j);
+            for n = 1:size(X, 1)
+                xnxnt = X(n, :) * transpose(X(n, :));
+                yiminusy = Y(n, k) * (Ikj - Y(n, k));
+                summation = summation + yiminusy * xnxnt; 
+            end
+            H(k, j) = (-1) * summation;
+        end
+    end
+
+    W = Wold - (H\Egrad);
 end
 
 end
