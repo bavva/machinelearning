@@ -26,12 +26,15 @@ end
 
 predicted_label = blrPredict(W, train_data);
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(predicted_label == train_label)) * 100);
+linear_reg_train_acc = mean(double(predicted_label == train_label)) * 100;
 
 predicted_label = blrPredict(W, validation_data);
 fprintf('\nValidation Set Accuracy: %f\n', mean(double(predicted_label == validation_label)) * 100);
+linear_reg_val_acc = mean(double(predicted_label == validation_label)) * 100;
 
 predicted_label = blrPredict(W, test_data);
 fprintf('\nTest Set Accuracy: %f\n', mean(double(predicted_label == test_label)) * 100);
+linear_reg_test_acc = mean(double(predicted_label == test_label)) * 100;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Logistic Regression with Newton-Raphson method**************
@@ -100,28 +103,43 @@ fprintf('\nTest Set Accuracy: %f\n', mean(double(predicted_label == test_label))
 model = svmtrain(train_label, train_data, '-t 0');
 [~, accuracy, ~] = svmpredict(train_label, train_data, model);
 fprintf('\nSVM linear kernel Training Set Accuracy: %f\n', accuracy);
+svm_t0_train_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
 fprintf('\nSVM linear kernel Validation Set Accuracy: %f\n', accuracy);
+svm_t0_val_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(test_label, test_data, model);
 fprintf('\nSVM linear kernel Test Set Accuracy: %f\n', accuracy);
+svm_t0_test_acc = accuracy;
 
 % Using radial basis function with value of gamma setting to 1
 model = svmtrain(train_label, train_data, '-t 2 -g 1');
 [~, accuracy, ~] = svmpredict(train_label, train_data, model);
 fprintf('\nSVM radial basis function with gamma 1 Training Set Accuracy: %f\n', accuracy);
+svm_t2g1_train_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
 fprintf('\nSVM radial basis function with gamma 1 Validation Set Accuracy: %f\n', accuracy);
+svm_t2g1_val_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(test_label, test_data, model);
 fprintf('\nSVM radial basis function with gamma 1 Test Set Accuracy: %f\n', accuracy);
+svm_t2g1_test_acc = accuracy;
 
 % Using radial basis function with value of gamma setting to default
 model = svmtrain(train_label, train_data, '-t 2');
 [~, accuracy, ~] = svmpredict(train_label, train_data, model);
 fprintf('\nSVM radial basis function with gamma default Training Set Accuracy: %f\n', accuracy);
+svm_t2_train_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(validation_label, validation_data, model);
 fprintf('\nSVM radial basis function with gamma default Validation Set Accuracy: %f\n', accuracy);
+svm_t2_val_acc = accuracy;
+
 [~, accuracy, ~] = svmpredict(test_label, test_data, model);
 fprintf('\nSVM radial basis function with gamma default Test Set Accuracy: %f\n', accuracy);
+svm_t2_test_acc = accuracy;
 
 % Using radial basis function with different values of C
 costs = [1 10:10:100];
@@ -141,6 +159,9 @@ for i = 1:length(costs)
     [~, accuracy, ~] = svmpredict(test_label, test_data, model);
     test_accuracies(i, 1) = accuracy;
 end
+
+save('results.mat', 'linear_reg_train_acc', 'linear_reg_val_acc', 'linear_reg_test_acc', 'svm_t0_train_acc', 'svm_t0_val_acc', 'svm_t0_test_acc', 'svm_t2g1_train_acc', 'svm_t2g1_val_acc', 'svm_t2g1_test_acc', 'svm_t2_train_acc', 'svm_t2_val_acc', 'svm_t2_test_acc', 'costs', 'train_accuracies', 'validation_accuracies', 'test_accuracies');
+
 figure;
 plot(costs', train_accuracies, costs', validation_accuracies, costs', test_accuracies);
 legend('Training Accuracy', 'Validation Accuracy', 'Testing Accuracy');
