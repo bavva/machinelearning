@@ -47,7 +47,7 @@ for temp = 1:n_iter
                 yiminusy = Y(n, k) * (Ikj - Y(n, k));
                 summation = summation + yiminusy * xnxnt; 
             end
-            H(k, j) = (-1) * summation;
+            H(k, j) = summation;
         end
     end
 
