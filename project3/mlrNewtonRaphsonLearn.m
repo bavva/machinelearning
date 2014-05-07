@@ -35,23 +35,18 @@ for temp = 1:n_iter
     Y = expA ./ exapandedSumExpA;
     Egrad = X' * (Y - T);
     
-    n_attr = size(X, 2);
-    % Calculate hessian matrix
-    H = zeros(n_attr, n_attr);
-    for k = 1:n_attr
-        for j = 1:n_attr
-            summation = 0;
-            Ikj = (k == j);
-            for n = 1:size(X, 1)
-                xnxnt = X(n, :) * transpose(X(n, :));
-                yiminusy = Y(n, k) * (Ikj - Y(n, k));
-                summation = summation + yiminusy * xnxnt; 
-            end
-            H(k, j) = summation;
-        end
-    end
-
-    W = Wold - (pinv(H) * Egrad);
+    bigEgrad = reshape(Egrad, size(Egrad, 1) * size(Egrad, 2), 1);
+    
+    nclass = size(T, 2);
+    bigX = repmat(X, nclass, nclass);
+    bigY = reshape(Y, size(Y, 1) * size(Y, 2), 1);
+    bigR = diag(sparse(bigY .* (1 - bigY)));
+    bigH = bigX' * bigR * bigX;
+    
+    bigDelta = pinv(bigH) * bigEgrad;
+    delta = reshape(bigDelta, size(Wold));
+    
+    W = Wold - delta;
 end
 
 end

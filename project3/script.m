@@ -226,7 +226,7 @@ save('results.mat', 'logistic_reg_train_acc', 'logistic_reg_val_acc', 'logistic_
 figure;
 plot(costs', train_accuracies, costs', validation_accuracies, costs', test_accuracies);
 legend('Training Accuracy', 'Validation Accuracy', 'Testing Accuracy');
-text(costs(max_val_accuracy_index), test_accuracies(max_val_accuracy_index), '\leftarrow Maximum validation data accuracy');
+text(costs(max_val_accuracy_index), validation_accuracies(max_val_accuracy_index), '\leftarrow Maximum validation data accuracy');
 xlabel Cost
 ylabel Accuracy
 
