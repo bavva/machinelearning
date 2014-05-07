@@ -185,8 +185,9 @@ train_accuracies = zeros(length(costs),1);
 validation_accuracies = zeros(length(costs),1);
 test_accuracies = zeros(length(costs),1);
 
-max_test_accuracy = 0;
-max_test_accuracy_index = 0;
+max_val_accuracy = 0;
+max_val_accuracy_index = 0;
+cost_rbf_C = 0;
 
 for i = 1:length(costs)
     cost = costs(i);
@@ -203,11 +204,18 @@ for i = 1:length(costs)
     accuracy = mean(double(predicted_label == test_label)) * 100;
     test_accuracies(i, 1) = accuracy;
     
-    if (accuracy > max_test_accuracy)
-        max_test_accuracy = accuracy;
+    if (accuracy > max_val_accuracy)
+        max_val_accuracy = accuracy;
         model_rbf_C = model;
         cost_rbf_C = cost;
-        max_test_accuracy_index = i;
+        max_val_accuracy_index = i;
+    elseif (accuracy == max_val_accuracy)
+        if (cost < cost_rbf_C)
+            max_val_accuracy = accuracy;
+            model_rbf_C = model;
+            cost_rbf_C = cost;
+            max_val_accuracy_index = i;
+        end
     end
 end
 
@@ -218,7 +226,7 @@ save('results.mat', 'logistic_reg_train_acc', 'logistic_reg_val_acc', 'logistic_
 figure;
 plot(costs', train_accuracies, costs', validation_accuracies, costs', test_accuracies);
 legend('Training Accuracy', 'Validation Accuracy', 'Testing Accuracy');
-text(costs(max_test_accuracy_index), test_accuracies(max_test_accuracy_index), '\leftarrow Maximum accuracy');
+text(costs(max_val_accuracy_index), test_accuracies(max_val_accuracy_index), '\leftarrow Maximum validation data accuracy');
 xlabel Cost
 ylabel Accuracy
 
