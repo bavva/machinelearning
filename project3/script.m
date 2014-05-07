@@ -204,24 +204,17 @@ for i = 1:length(costs)
     accuracy = mean(double(predicted_label == test_label)) * 100;
     test_accuracies(i, 1) = accuracy;
     
-    if (accuracy > max_val_accuracy)
-        max_val_accuracy = accuracy;
+    if (validation_accuracies(i, 1) > max_val_accuracy)
+        max_val_accuracy = validation_accuracies(i, 1);
         model_rbf_C = model;
         cost_rbf_C = cost;
         max_val_accuracy_index = i;
-    elseif (accuracy == max_val_accuracy)
-        if (cost < cost_rbf_C)
-            max_val_accuracy = accuracy;
-            model_rbf_C = model;
-            cost_rbf_C = cost;
-            max_val_accuracy_index = i;
-        end
     end
 end
 
 save('params.mat', 'W_blr', 'W_blr_Newton', 'W_mlr', 'W_mlr_Newton', 'model_linear', 'model_rbf_1', 'model_rbf_default', 'model_rbf_C', 'cost_rbf_C');
 
-save('results.mat', 'logistic_reg_train_acc', 'logistic_reg_val_acc', 'logistic_reg_test_acc', 'lr_hessian_train_acc', 'lr_hessian_val_acc', 'lr_hessian_test_acc', 'mlr_train_acc', 'mlr_val_acc', 'mlr_test_acc', 'mlr_hessian_train_acc', 'mlr_hessian_val_acc', 'mlr_hessian_test_acc', 'svm_t0_train_acc', 'svm_t0_val_acc', 'svm_t0_test_acc', 'svm_t2g1_train_acc', 'svm_t2g1_val_acc', 'svm_t2g1_test_acc', 'svm_t2_train_acc', 'svm_t2_val_acc', 'svm_t2_test_acc', 'costs', 'train_accuracies', 'validation_accuracies', 'test_accuracies');
+%save('results.mat', 'logistic_reg_train_acc', 'logistic_reg_val_acc', 'logistic_reg_test_acc', 'lr_hessian_train_acc', 'lr_hessian_val_acc', 'lr_hessian_test_acc', 'mlr_train_acc', 'mlr_val_acc', 'mlr_test_acc', 'mlr_hessian_train_acc', 'mlr_hessian_val_acc', 'mlr_hessian_test_acc', 'svm_t0_train_acc', 'svm_t0_val_acc', 'svm_t0_test_acc', 'svm_t2g1_train_acc', 'svm_t2g1_val_acc', 'svm_t2g1_test_acc', 'svm_t2_train_acc', 'svm_t2_val_acc', 'svm_t2_test_acc', 'costs', 'train_accuracies', 'validation_accuracies', 'test_accuracies');
 
 figure;
 plot(costs', train_accuracies, costs', validation_accuracies, costs', test_accuracies);
