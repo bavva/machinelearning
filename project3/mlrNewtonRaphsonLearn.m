@@ -33,15 +33,14 @@ for temp = 1:n_iter
         exapandedSumExpA(:, i) = sumExpA;
     end
     Y = expA ./ exapandedSumExpA;
-    Egrad = X' * (Y - T);
-    
-    bigEgrad = reshape(Egrad, size(Egrad, 1) * size(Egrad, 2), 1);
     
     nclass = size(T, 2);
     bigX = repmat(X, nclass, nclass);
     bigY = reshape(Y, size(Y, 1) * size(Y, 2), 1);
+    bigT = reshape(T, size(T, 1) * size(T, 2), 1);
     bigR = diag(sparse(bigY .* (1 - bigY)));
     bigH = bigX' * bigR * bigX;
+    bigEgrad = bigX' * (bigY - bigT);
     
     bigDelta = pinv(bigH) * bigEgrad;
     delta = reshape(bigDelta, size(Wold));
