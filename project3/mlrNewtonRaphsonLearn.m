@@ -39,11 +39,9 @@ for temp = 1:n_iter
     k = size(T, 2);
     KX = repmat(X, k, k);
     FlatY = reshape(Y, size(Y, 1) * size(Y, 2), 1);
-    FlatYDiag = diag(sparse(FlatY));
-    IsizeofFlatY = eye(size(FlatY, 1));
-    
-    something = FlatYDiag .* (IsizeofFlatY - FlatYDiag);
-    bigH = KX' * something * KX;
+    FlatYProduct = FlatY .* (1 - FlatY);
+    FlatYProductDiag = diag(sparse(FlatYProduct));
+    bigH = KX' * FlatYProductDiag * KX;
     
     bigDelta = pinv(bigH) * FlatEgrad;
     delta = reshape(bigDelta, size(Wold, 1), size(Wold, 2));
